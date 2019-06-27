@@ -7,7 +7,8 @@ from .views import (
                     PostDetailView, 
                     PostCreateView, 
                     PostUpdateView, 
-                    PostDeleteView)
+                    PostDeleteView,
+                    UserPostListView)
 
 
 urlpatterns = [  
@@ -18,9 +19,15 @@ urlpatterns = [
     #views.py . "name" will help us during UI customization 
     #Naming convention for name is the appNameAndRoute eg. here blog-home
     path('about/', views.about, name='blog-about'),
+    #template has to be user-posts.html
+    path('user/<str:username>', UserPostListView.as_view(), name='user-posts'),
+    #template has to be post-detail.html
     path('post/<int:pk>/', PostDetailView.as_view(), name='post-detail'),
+    #template has to be post-create.html
     path('post/new/', PostCreateView.as_view(), name='post-create'),
+    #template has to be post-update.html
     path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post-update'),
+    #template has to be post-delete.html
     path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),
 
 ]

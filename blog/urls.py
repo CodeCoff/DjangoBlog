@@ -30,17 +30,17 @@ from users import views as user_views
 urlpatterns = [
     #this is sending admin route to admin.site.urls and running the logic from there
     path('admin/', admin.site.urls),
-    #when the user goes to blog, give the logic from blogapp.urls
-    #the include function chops of the routes url and just sends the remaining string to blogapp.urls
-    #here, it chops of blog/ and sends empty / to blogapp.urls
-    path('', include('blogapp.urls')),
     #when register/ send to users.views
     path('register/', user_views.register, name='register'),
+    path('profile/', user_views.profile, name='profile'),
     #built in login/logout views from django. as_view(template_name='users/login.html') means
     # to update the template lookup location instead of django default 'registration/login.html'
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
-    path('profile/', user_views.profile, name='profile'),
+    #when the user goes to blog, give the logic from blogapp.urls
+    #the include function chops of the routes url and just sends the remaining string to blogapp.urls
+    #here, it chops of blog/ and sends empty / to blogapp.urls
+    path('', include('blogapp.urls')),
 ]
 
 if settings.DEBUG:

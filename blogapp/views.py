@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 #we will use real data from database which is why we need to import the models
 from .models import Post
 #this helps us with creating more feature rich views and is provided by django
@@ -7,7 +7,8 @@ from django.views.generic import (
                                 DetailView, 
                                 CreateView, 
                                 UpdateView,
-                                DeleteView)
+                                DeleteView)                                
+from django.contrib.auth.models import User
 
 #LoginRequiredMixin helps us prevent user access forms without loggin in
 #UserPassesTestMixin helps us prevent random user make any changes in existing posts
@@ -36,6 +37,19 @@ class PostListView(ListView):
     context_object_name = 'posts'
     #this is to order our posts from latest to oldest
     ordering = ['-date_posted']
+    #this is a pagination attribute i.e. page navigation 
+    paginate_by = 5
+
+#this will show the posts list of a specific user
+class UserPostListView(ListView):
+    model = Post
+    template_name = 'blogapp/user_posts.html'
+    context_object_name = 'posts'
+    paginate_by = 5
+
+    def get_queryset(self):
+        user = get_object_or_404(User, username=self.kwargs.get('username'))
+        return Post.objects.filter(author=user).order_by('-date_posted')
 
 #class based view. This is inheriting DetailView that django provides
 class PostDetailView(DetailView):
