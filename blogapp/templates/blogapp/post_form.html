@@ -1,0 +1,19 @@
+<!--we don't need to create a new base.html, django automatically finds the template file we are extending-->
+{% extends "blogapp/base.html" %}
+<!--3rd party crispy form-->
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="content-section">
+      <!--we need to add the csrf_token to all of our forms. This is a security measure to protect our site that django requires us to provide; else the form will not work-->
+      <form method="POST">
+        {% csrf_token %}
+        <fieldset class="form-group">
+          <legend class="border-bottom mb-4">Blog Post</legend>
+          {{ form|crispy }}
+        </fieldset>
+        <div class="form-group">
+          <button class="btn btn-outline-info" type="submit">Post</button>
+        </div>
+      </form>
+    </div>
+{% endblock content %}

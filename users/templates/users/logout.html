@@ -1,0 +1,10 @@
+<!--we don't need to create a new base.html, django automatically finds the template file we are extending-->
+{% extends "blogapp/base.html" %}
+{% block content %}
+<h2>You have been logged out</h2>
+    <div class="border-top pt-3">
+    <small class="text-muted">
+        <a href="{% url 'login' %}">Log In Again</a>
+    </small>
+    </div>  
+{% endblock content %}
